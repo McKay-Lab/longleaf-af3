@@ -1,9 +1,9 @@
 {
-  "name": "h3_h4_tetramer_k4me3",
+  "name": "nucleosome_h3k4me3",
   "sequences": [
     {
       "protein": {
-        "id": ["A", "C"],
+        "id": ["A", "E"],
         "sequence": "MARTKQTARKSTGGKAPRKQLATKAARKSAPATGGVKKPHRYRPGTVALREIRRYQKSTELLIRKLPFQRLVREIAQDFKTDLRFQSSAVMALQEASEAYLVGLFEDTNLCAIHAKRVTIMPKDIQLARRIRGERA",
         "modifications": [
           {"ptmType": "M3L", "ptmPosition": 5}
@@ -12,12 +12,36 @@
     },
     {
       "protein": {
-        "id": ["B", "D"],
+        "id": ["B", "F"],
         "sequence": "MSGRGKGGKGLGKGGAKRHRKVLRDNIQGITKPAIRRLARRGGVKRISGLIYEETRGVLKVFLENVIRDAVTYTEHAKRKTVTAMDVVYALKRQGRTLYGFGG"
+      }
+    },
+    {
+      "protein": {
+        "id": ["C", "G"],
+        "sequence": "MSGRGKGGKVKGKAKSRSNRAGLQFPVGRIHRLLRKGNYAERVGAGAPVYLAAVMEYLAAEVLELAGNAARDNKKTRIIPRHLQLAIRNDEELNKLLSGVTIAQGGVLPNIQAVLLPKKTEKKA"
+      }
+    },
+    {
+      "protein": {
+        "id": ["D", "H"],
+        "sequence": "MPPKTSGKAAKKAGKAQKNITKTDKKKKRKRKESYAIYIYKVLKQVHPDTGISSKAMSIMNSFVNDIFERIAAEASRLAHYNKRSTITSREIQTAVRLLLPGELAKHAVSEGTKAVTKYTSSK"
+      }
+    },
+    {
+      "dna": {
+        "id": "I",
+        "sequence": "AGGATGTATATATCTGACACGTGCCTGGAGACTAGGGAGTAATCCCCTTGGCGGTTAAAACGCGGGGGACAGCGCGTACGTGCGTTTAAGCGGTGCTAGAGCTGTCTACGACCAATTGAGCGGCCTCGGCACCGGGATTCTCGA"
+      }
+    },
+    {
+      "dna": {
+        "id": "J",
+        "sequence": "TCGAGAATCCCGGTGCCGAGGCCGCTCAATTGGTCGTAGACAGCTCTAGCACCGCTTAAACGCACGTACGCGCTGTCCCCCGCGTTTTAACCGCCAAGGGGATTACTCCCTAGTCTCCAGGCACGTGTCAGATATATACATCCTCG"
       }
     }
   ],
-  "modelSeeds": [1, 2, 3, 4, 5],
+  "modelSeeds": [1, 2, 3],
   "dialect": "alphafold3",
   "version": 1
 }

@@ -1,0 +1,23 @@
+{
+  "name": "h3_h4_tetramer_k4me3",
+  "sequences": [
+    {
+      "protein": {
+        "id": ["A", "C"],
+        "sequence": "MARTKQTARKSTGGKAPRKQLATKAARKSAPATGGVKKPHRYRPGTVALREIRRYQKSTELLIRKLPFQRLVREIAQDFKTDLRFQSSAVMALQEASEAYLVGLFEDTNLCAIHAKRVTIMPKDIQLARRIRGERA",
+        "modifications": [
+          {"ptmType": "M3L", "ptmPosition": 5}
+        ]
+      }
+    },
+    {
+      "protein": {
+        "id": ["B", "D"],
+        "sequence": "MSGRGKGGKGLGKGGAKRHRKVLRDNIQGITKPAIRRLARRGGVKRISGLIYEETRGVLKVFLENVIRDAVTYTEHAKRKTVTAMDVVYALKRQGRTLYGFGG"
+      }
+    }
+  ],
+  "modelSeeds": [1, 2, 3, 4, 5],
+  "dialect": "alphafold3",
+  "version": 1
+}

@@ -1,0 +1,26 @@
+{
+  "name": "p53_dbd_dna",
+  "sequences": [
+    {
+      "protein": {
+        "id": ["A", "B"],
+        "sequence": "SSSVPSQKTYPQGLNGTVNLPGRNSFEVRVCSPHETSPLQKIDLVTTLTLGLHICQLACTSPALNKMFCQLAKTCPVQLWVSATPPAGSRVRAMAIYKKSQHMTEVVRRCPHHERCSETSQHSLPIDDLLRSQIRQHLHQILRGEVRRC"
+      }
+    },
+    {
+      "dna": {
+        "id": "C",
+        "sequence": "TAGACTTGCCTGGACTTGCCTAG"
+      }
+    },
+    {
+      "dna": {
+        "id": "D",
+        "sequence": "CTAGGCAAGTCCAGGCAAGTCTA"
+      }
+    }
+  ],
+  "modelSeeds": [1, 2, 3],
+  "dialect": "alphafold3",
+  "version": 1
+}

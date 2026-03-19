@@ -1,0 +1,20 @@
+{
+  "name": "barnase_barstar",
+  "sequences": [
+    {
+      "protein": {
+        "id": "A",
+        "sequence": "AQVINTFDGVADYLQTYHKLPDNYITKSEAQALGWVASKGNLADVAPGKSIGGDIFSNREGKLPGKSGRTWREADINYTS"
+      }
+    },
+    {
+      "protein": {
+        "id": "B",
+        "sequence": "KKAVINGEQIRSISDLHQTLKKELALPEYYGENLDALWDCLTGWVEYPLVLEWRQFEQSKQLTENGAESVLQVFREAKAEGCDITIILS"
+      }
+    }
+  ],
+  "modelSeeds": [1, 2, 3],
+  "dialect": "alphafold3",
+  "version": 1
+}

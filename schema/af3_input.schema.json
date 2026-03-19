@@ -24,14 +24,14 @@
           {
             "required": ["dna"],
             "properties": {
-              "dna": { "$ref": "#/$defs/nucleotideChain" }
+              "dna": { "$ref": "#/$defs/dnaChain" }
             },
             "additionalProperties": false
           },
           {
             "required": ["rna"],
             "properties": {
-              "rna": { "$ref": "#/$defs/nucleotideChain" }
+              "rna": { "$ref": "#/$defs/rnaChain" }
             },
             "additionalProperties": false
           },
@@ -55,36 +55,48 @@
       "const": "alphafold3"
     },
     "version": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4
     },
     "bondedAtomPairs": {
       "type": "array",
       "items": {
         "type": "array",
-        "items": {
-          "type": "array",
-          "prefixItems": [
-            { "type": "string" },
-            { "type": "integer" },
-            { "type": "string" }
-          ],
-          "minItems": 3,
-          "maxItems": 3
-        },
+        "prefixItems": [
+          { "$ref": "#/$defs/atomRef" },
+          { "$ref": "#/$defs/atomRef" }
+        ],
         "minItems": 2,
         "maxItems": 2
       }
+    },
+    "userCCD": {
+      "type": "string"
+    },
+    "userCCDPath": {
+      "type": "string"
     }
   },
   "additionalProperties": false,
   "$defs": {
     "chainId": {
       "oneOf": [
-        { "type": "string", "minLength": 1 },
-        { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 }
+        { "type": "string", "minLength": 1, "pattern": "^[A-Z]+$" },
+        { "type": "array", "items": { "type": "string", "minLength": 1, "pattern": "^[A-Z]+$" }, "minItems": 1 }
       ]
     },
-    "modification": {
+    "atomRef": {
+      "type": "array",
+      "prefixItems": [
+        { "type": "string" },
+        { "type": "integer" },
+        { "type": "string" }
+      ],
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "proteinModification": {
       "type": "object",
       "required": ["ptmType", "ptmPosition"],
       "properties": {
@@ -93,29 +105,75 @@
       },
       "additionalProperties": false
     },
+    "nucleotideModification": {
+      "type": "object",
+      "required": ["modificationType", "basePosition"],
+      "properties": {
+        "modificationType": { "type": "string" },
+        "basePosition": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "template": {
+      "type": "object",
+      "required": ["queryIndices", "templateIndices"],
+      "properties": {
+        "mmcif": { "type": "string" },
+        "mmcifPath": { "type": "string" },
+        "queryIndices": { "type": "array", "items": { "type": "integer" } },
+        "templateIndices": { "type": "array", "items": { "type": "integer" } }
+      },
+      "additionalProperties": false
+    },
     "proteinChain": {
       "type": "object",
       "required": ["id", "sequence"],
       "properties": {
         "id": { "$ref": "#/$defs/chainId" },
-        "sequence": { "type": "string", "pattern": "^[A-Z]+$" },
+        "sequence": { "type": "string", "pattern": "^[A-Za-z]+$" },
         "modifications": {
           "type": "array",
-          "items": { "$ref": "#/$defs/modification" }
+          "items": { "$ref": "#/$defs/proteinModification" }
+        },
+        "description": { "type": "string" },
+        "unpairedMsa": { "type": "string" },
+        "unpairedMsaPath": { "type": "string" },
+        "pairedMsa": { "type": "string" },
+        "pairedMsaPath": { "type": "string" },
+        "templates": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/template" }
         }
       },
       "additionalProperties": false
     },
-    "nucleotideChain": {
+    "dnaChain": {
       "type": "object",
       "required": ["id", "sequence"],
       "properties": {
         "id": { "$ref": "#/$defs/chainId" },
-        "sequence": { "type": "string", "minLength": 1 },
+        "sequence": { "type": "string", "pattern": "^[A-Za-z]+$" },
         "modifications": {
           "type": "array",
-          "items": { "$ref": "#/$defs/modification" }
-        }
+          "items": { "$ref": "#/$defs/nucleotideModification" }
+        },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "rnaChain": {
+      "type": "object",
+      "required": ["id", "sequence"],
+      "properties": {
+        "id": { "$ref": "#/$defs/chainId" },
+        "sequence": { "type": "string", "pattern": "^[A-Za-z]+$" },
+        "modifications": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nucleotideModification" }
+        },
+        "description": { "type": "string" },
+        "unpairedMsa": { "type": "string" },
+        "unpairedMsaPath": { "type": "string" }
       },
       "additionalProperties": false
     },
@@ -129,7 +187,8 @@
           "items": { "type": "string" },
           "minItems": 1
         },
-        "smiles": { "type": "string" }
+        "smiles": { "type": "string" },
+        "description": { "type": "string" }
       },
       "additionalProperties": false
     }

@@ -14,6 +14,9 @@ def _make_minimal_input() -> dict:
     }
 
 
+# --- Valid inputs ---
+
+
 def test_valid_minimal_input() -> None:
     errors = validate_input(_make_minimal_input())
     assert errors == []
@@ -40,18 +43,53 @@ def test_valid_rna_chain() -> None:
     assert errors == []
 
 
-def test_valid_ligand() -> None:
+def test_valid_ligand_ccd() -> None:
     data = _make_minimal_input()
     data["sequences"].append({"ligand": {"id": "L", "ccdCodes": ["ATP"]}})
     errors = validate_input(data)
     assert errors == []
 
 
-def test_valid_modifications() -> None:
+def test_valid_ligand_smiles() -> None:
+    data = _make_minimal_input()
+    data["sequences"].append({"ligand": {"id": "L", "smiles": "CC(=O)O"}})
+    errors = validate_input(data)
+    assert errors == []
+
+
+def test_valid_protein_modifications() -> None:
     data = _make_minimal_input()
     data["sequences"][0]["protein"]["modifications"] = [
         {"ptmType": "MLZ", "ptmPosition": 1}
     ]
+    errors = validate_input(data)
+    assert errors == []
+
+
+def test_valid_dna_modifications() -> None:
+    """DNA modifications use modificationType/basePosition, not ptmType/ptmPosition."""
+    data = _make_minimal_input()
+    data["sequences"].append({
+        "dna": {
+            "id": "I",
+            "sequence": "GATCGATC",
+            "modifications": [{"modificationType": "6OG", "basePosition": 1}],
+        }
+    })
+    errors = validate_input(data)
+    assert errors == []
+
+
+def test_valid_rna_modifications() -> None:
+    """RNA modifications use modificationType/basePosition."""
+    data = _make_minimal_input()
+    data["sequences"].append({
+        "rna": {
+            "id": "R",
+            "sequence": "AUCG",
+            "modifications": [{"modificationType": "OMU", "basePosition": 2}],
+        }
+    })
     errors = validate_input(data)
     assert errors == []
 
@@ -62,6 +100,46 @@ def test_valid_bonded_atom_pairs() -> None:
     data["bondedAtomPairs"] = [[["A", 1, "CB"], ["M", 1, "C1"]]]
     errors = validate_input(data)
     assert errors == []
+
+
+def test_valid_version_range() -> None:
+    for v in (1, 2, 3, 4):
+        data = _make_minimal_input()
+        data["version"] = v
+        errors = validate_input(data)
+        assert errors == [], f"version {v} should be valid"
+
+
+def test_valid_protein_with_description() -> None:
+    data = _make_minimal_input()
+    data["sequences"][0]["protein"]["description"] = "test protein"
+    errors = validate_input(data)
+    assert errors == []
+
+
+def test_valid_protein_with_msa() -> None:
+    data = _make_minimal_input()
+    data["sequences"][0]["protein"]["unpairedMsa"] = ">seq\nMKTL"
+    data["sequences"][0]["protein"]["pairedMsa"] = ""
+    errors = validate_input(data)
+    assert errors == []
+
+
+def test_valid_user_ccd() -> None:
+    data = _make_minimal_input()
+    data["userCCD"] = "data_MY_LIGAND\n..."
+    errors = validate_input(data)
+    assert errors == []
+
+
+def test_valid_chain_id_multi_letter() -> None:
+    data = _make_minimal_input()
+    data["sequences"][0]["protein"]["id"] = "AA"
+    errors = validate_input(data)
+    assert errors == []
+
+
+# --- Invalid inputs ---
 
 
 def test_missing_name() -> None:
@@ -102,5 +180,40 @@ def test_invalid_sequence_type() -> None:
 def test_protein_missing_sequence() -> None:
     data = _make_minimal_input()
     del data["sequences"][0]["protein"]["sequence"]
+    errors = validate_input(data)
+    assert len(errors) > 0
+
+
+def test_invalid_version() -> None:
+    data = _make_minimal_input()
+    data["version"] = 5
+    errors = validate_input(data)
+    assert len(errors) > 0
+
+
+def test_invalid_version_zero() -> None:
+    data = _make_minimal_input()
+    data["version"] = 0
+    errors = validate_input(data)
+    assert len(errors) > 0
+
+
+def test_lowercase_chain_id_rejected() -> None:
+    data = _make_minimal_input()
+    data["sequences"][0]["protein"]["id"] = "a"
+    errors = validate_input(data)
+    assert len(errors) > 0
+
+
+def test_dna_wrong_modification_format() -> None:
+    """DNA modifications must use modificationType/basePosition, not ptmType/ptmPosition."""
+    data = _make_minimal_input()
+    data["sequences"].append({
+        "dna": {
+            "id": "I",
+            "sequence": "GATC",
+            "modifications": [{"ptmType": "6OG", "ptmPosition": 1}],
+        }
+    })
     errors = validate_input(data)
     assert len(errors) > 0

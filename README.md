@@ -4,15 +4,16 @@ Submit AlphaFold 3 jobs to UNC's Longleaf HPC cluster.
 
 ## Prerequisites
 
-- Access to Longleaf with GPU partition (`a100-gpu` or `l40-gpu`)
-- SSH access to Longleaf (see [SSH setup guide](docs/ssh-setup.md))
-- [uv](https://docs.astral.sh/uv/) installed on Longleaf
-
-To install uv on Longleaf:
+1. **Longleaf account.** Request one at [UNC ITS Service Request](https://tdx.unc.edu/TDClient/33/Portal/Requests/ServiceDet?ID=45) (takes ~5 business days).
+2. **GPU access.** Email research@unc.edu and request access to the `a100-gpu` and `l40-gpu` partitions. Mention you need it for AlphaFold 3 structure prediction.
+3. **SSH access.** See the [SSH setup guide](docs/ssh-setup.md) for key-based login from your laptop.
+4. **uv** (Python package manager). Install on Longleaf:
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
+
+Note: off-campus users must connect through the [UNC VPN](https://help.unc.edu/sp?id=kb_article_view&sysparm_article=KB0010155) first.
 
 ## Setup
 
@@ -69,7 +70,7 @@ See the `examples/` directory for templates:
 
 - `simple_dimer.json` -- two-protein complex (barnase-barstar)
 - `trimer_with_dna.json` -- protein-DNA complex (p53 with response element)
-- `modified_protein.json` -- histone tetramer with H3K4me3 modification
+- `modified_protein.json` -- nucleosome with H3K4me3 modification and Widom 601 DNA
 
 The input JSON follows the [AlphaFold 3 input format](https://github.com/google-deepmind/alphafold3/blob/main/docs/input.md). Key fields:
 

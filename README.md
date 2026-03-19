@@ -5,6 +5,7 @@ Submit AlphaFold 3 jobs to UNC's Longleaf HPC cluster.
 ## Prerequisites
 
 - Access to Longleaf with GPU partition (`a100-gpu` or `l40-gpu`)
+- SSH access to Longleaf (see [SSH setup guide](docs/ssh-setup.md))
 - [uv](https://docs.astral.sh/uv/) installed on Longleaf
 
 To install uv on Longleaf:

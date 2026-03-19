@@ -11,6 +11,7 @@ def test_small_job() -> None:
     res = estimate_resources(data)
     assert res.mem == "64G"
     assert res.time == "6:00:00"
+    assert res.partition == "a100-gpu,l40-gpu"
 
 
 def test_medium_job() -> None:
@@ -21,6 +22,7 @@ def test_medium_job() -> None:
     res = estimate_resources(data)
     assert res.mem == "128G"
     assert res.time == "12:00:00"
+    assert res.partition == "a100-gpu,l40-gpu"
 
 
 def test_large_job() -> None:
@@ -31,6 +33,7 @@ def test_large_job() -> None:
     res = estimate_resources(data)
     assert res.mem == "256G"
     assert res.time == "24:00:00"
+    assert res.partition == "a100-gpu"
 
 
 def test_dna_counted() -> None:

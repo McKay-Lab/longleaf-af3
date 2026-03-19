@@ -48,6 +48,13 @@ def _base_mem(residues: int) -> str:
     return "256G"
 
 
+def _partition(residues: int) -> str:
+    """GPU partition based on total residues. Large jobs need A100 (80GB VRAM)."""
+    if residues > 2000:
+        return "a100-gpu"
+    return "a100-gpu,l40-gpu"
+
+
 def _format_time(hours: int) -> str:
     """Format hours as HH:MM:SS or D-HH:MM:SS."""
     if hours > 24:
@@ -69,4 +76,5 @@ def estimate_resources(data: dict) -> SlurmResources:
     return SlurmResources(
         mem=_base_mem(residues),
         time=_format_time(scaled_hours),
+        partition=_partition(residues),
     )

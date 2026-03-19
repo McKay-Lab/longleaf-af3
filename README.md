@@ -100,13 +100,13 @@ Add post-translational modifications using CCD codes:
 
 The tool estimates SLURM resources based on total residues/bases:
 
-| Total residues | Memory | Time |
-|---------------|--------|------|
-| <500          | 64G    | 6h   |
-| 500-2000      | 128G   | 12h  |
-| >2000         | 256G   | 24h  |
+| Total residues | Memory | Time | GPU |
+|---------------|--------|------|-----|
+| <500          | 64G    | 6h   | A100 or L40S |
+| 500-2000      | 128G   | 12h  | A100 or L40S |
+| >2000         | 256G   | 24h  | A100 only |
 
-Time scales with the number of seeds. Override any estimate with `--mem`, `--time`, or `--partition`.
+Large jobs (>2000 residues) are steered to A100 GPUs (80GB VRAM) since they won't fit on L40S (48GB). Time scales with the number of seeds. Override any estimate with `--mem`, `--time`, or `--partition`.
 
 ## Output
 

@@ -97,7 +97,7 @@ def cmd_status(args: argparse.Namespace) -> None:
     """Run the status command."""
     user = os.environ.get("USER", "")
     result = subprocess.run(
-        ["squeue", "-u", user, "--name=af3"],
+        ["squeue", "-u", user],
         capture_output=True,
         text=True,
         check=False,
@@ -105,7 +105,15 @@ def cmd_status(args: argparse.Namespace) -> None:
     if result.returncode != 0:
         print(f"squeue error: {result.stderr}", file=sys.stderr)
         sys.exit(1)
-    print(result.stdout)
+    lines = result.stdout.splitlines()
+    header = lines[0] if lines else ""
+    af3_jobs = [line for line in lines[1:] if "af3_" in line]
+    if af3_jobs:
+        print(header)
+        for line in af3_jobs:
+            print(line)
+    else:
+        print("No AF3 jobs running or queued.")
 
 
 def main() -> None:
